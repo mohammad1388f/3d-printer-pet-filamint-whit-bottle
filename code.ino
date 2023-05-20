@@ -17,7 +17,7 @@ IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 
 WebServer server(80);
-BasicStepperDriver stepper(100, 12, 0); 
+BasicStepperDriver stepper(100, 12,step pin); 
 int speed = 50; 
 int RPM = 200; 
 int temp = 270; 
@@ -32,10 +32,9 @@ const float B = 0.000234125;
 const float C = 0.0000000876741;
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(34, INPUT); 
-  pinMode(0, OUTPUT);  
-  pinMode(2, OUTPUT);    
+  Serial.begin(115200); 
+  pinMode(step pin, OUTPUT);  
+  pinMode(hot end pin, OUTPUT);    
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
 
@@ -69,11 +68,11 @@ void loop() {
       stepper.move(-100 * 32);
       if (Tc<temp)
     {
-      digitalWrite(2, HIGH);      
+      digitalWrite(hot end pin, HIGH);      
     }     
       else 
      {
-      digitalWrite(2, LOW); 
+      digitalWrite(hot end pin, LOW); 
      }          
 }
 
